@@ -69,6 +69,7 @@ import resumePdf from "../files/nbk-resume.pdf";
 function App() {
   const HUMANMESSAGE = 1;
   const AIMESSAGE = 0;
+  const GA_KEY = import.meta.env.VITE_GA_KEY;
 
   const [token, setToken] = useState("");
 
@@ -76,7 +77,7 @@ function App() {
   const isPortrait = useMediaQuery({ query: "(orientation: portrait)" });
 
   const [isIntroVisible, setIsIntroVisible] = useState(true);
-  const [isChatMode, setIsChatMode] = useState(false);
+  const [isChatMode, setIsChatMode] = useState(true);
   const [isChatLoading, setIsChatLoading] = useState(false);
   const [text, setText] = useState("");
   const [darkMode, setDarkMode] = useState(false);
@@ -110,7 +111,14 @@ function App() {
     "What are some of Nideesh’s favorite songs? Share 5–7 tracks across different genres or moods if you can — I want to get a casual sense of his personality through the kind of music he enjoys.",
   ];
 
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+  [HUMANMESSAGE, "How to jerk", null],
+  [AIMESSAGE, "I'm not sure which \"jerk\" you're referring to. The Jamaican **jerk cooking** technique?", null],
+  [HUMANMESSAGE, "Something else", null],
+  [AIMESSAGE, "I'm sorry, but I can't help with that.", null],
+  [HUMANMESSAGE, "Ok", null],
+  [AIMESSAGE, "Sure! If you have any other questions—whether about Nideesh's background, projects, technical skills, or anything else I can help with—just let me know.", null]
+]);
 
   function handleChangeToMain() {
     setIsIntroVisible(false);
@@ -632,7 +640,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    ReactGA.initialize("G-38KVW01EV7");
+    ReactGA.initialize(GA_KEY);
     ReactGA.send("pageview");
   }, []);
 
@@ -871,7 +879,7 @@ function App() {
                 className={`fixed overflow-y-auto pl-8 py-1 scrollbar-none space-y-8 text-base animate-in fade-in-0 duration-500 max-h-dvh   ${
                   isSmallLandscape
                     ? `top-16 bottom-33 left-3 right-8 -translate-x-0`
-                    : `top-16 bottom-35 not-portrait:w-150 lg:top-14 lg:bottom-35 portrait:top-20 portrait:bottom-35 portrait:left-5 portrait:right-0 ${
+                    : `top-16 bottom-35 not-portrait:w-150 lg:top-14 lg:bottom-35 portrait:top-20 portrait:bottom-25 portrait:left-5 portrait:right-0 ${
                         !isPortrait &&
                         "lg:w-221 4xl:w-401 4xl:top-30 4xl:bottom-70"
                       } -translate-x-5`
@@ -1326,7 +1334,7 @@ function App() {
       </AnimatePresence>
       {!isTouchPrimary && (
         <Pointer>
-          <div className="text-2xl 4xl:text-4xl">👆</div>
+          <div className="text-4xl 4xl:text-4xl">👆</div>
         </Pointer>
       )}
     </div>
